@@ -12,7 +12,7 @@ final class MainController extends AbstractController
     public function home(): Response
     {
 
-        dd("coucou");
+       return $this->render('main/home.html.twig');
 
     }
 
@@ -20,7 +20,7 @@ final class MainController extends AbstractController
     public function test(): Response
     {
 
-        dd("Hello World !");
+       return $this->render('main/test.html.twig');
 
     }
 }
