@@ -1,52 +1,39 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-<h1>TEST !</h1>
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h1>TEST !</h1>
 
-{# Création de variable #}
-{% set name = 'Michel' %}
-<h2>Hello {{ name }}</h2>
+    {# Création de variable #}
+    {% set name = 'Michel' %}
+    <h2>Hello {{ name }}</h2>
 
-{# Création d'un tableau #}
-{% set colors = ['red', 'yellow', 'purple', 'cornflowerblue'] %}
-{% for color in colors %}
-    {% if loop.first %}
-        <p>Première couleur</p>
-    {% elseif loop.last %}
-        <p>Dernière couleur</p>
-    {% endif %}
-    <div style="background-color: {{ color }}">{{ color }}</div>
-    <div>Index de l'élement : {{ loop.index }} / {{ loop.length }}</div>
-    <div>Index de l'élement à partir de 0 : {{ loop.index0 }}</div>
-{% endfor %}
+    {# Création d'un tableau #}
+    {% set colors = ['red', 'yellow', 'purple', 'cornflowerblue'] %}
+    {% for color in colors %}
+        {% if loop.first %}
+            <p>Première couleur</p>
+        {% elseif loop.last %}
+            <p>Dernière couleur</p>
+        {% endif %}
+        <div style="background-color: {{ color }}">{{ color }}</div>
+        <div>Index de l'élement : {{ loop.index }} / {{ loop.length }}</div>
+        <div>Index de l'élement à partir de 0 : {{ loop.index0 }}</div>
+    {% endfor %}
 
-{# Utilisation d'objet #}
-<!-- Commentaire visible -->
-{% set user = {name : 'Michel', age : 98} %}
-<p>Nom : {{ user.name }}</p>
-<p>Age : {{ user.age }}</p>
+    {# Utilisation d'objet #}
+    <!-- Commentaire visible -->
+    {% set user = {name : 'Michel', age : 98} %}
+    <p>Nom : {{ user.name }}</p>
+    <p>Age : {{ user.age }}</p>
 
-{# filtres #}
-<h2>Quelques filtres</h2>
-<div>{{ name | upper }}, Taille du nom : {{ name | length }}</div>
-<div>Taille du tableau : {{ colors | length }} couleurs</div>
-<div>Date du jour : {{ 'now' | date('d/m/Y') }}</div>
+    {# filtres #}
+    <h2>Quelques filtres</h2>
+    <div>{{ name | upper }}, Taille du nom : {{ name | length }}</div>
+    <div>Taille du tableau : {{ colors | length }} couleurs</div>
+    <div>Date du jour : {{ 'now' | date('d/m/Y') }}</div>
+
+
+{% endblock %}
 
 
 
 
-
-
-
-
-
-
-</body>
-</html>
