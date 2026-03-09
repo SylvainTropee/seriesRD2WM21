@@ -32,7 +32,29 @@
     <div>Date du jour : {{ 'now' | date('d/m/Y') }}</div>
 
 
+    <h3>Série !</h3>
+    <div>{{ mySerie.name }}</div>
+    <div>{{ mySerie.author }}</div>
+    <div>Nombre épisodes : {{ mySerie.nbEpisode }}</div>
+    <div>Date du serveur : {{ date | date('d/m/Y H:i') }}</div>
+
+    <h3>XSS</h3>
+    <div>{{ username }}</div>
+{#    désactive la protection#}
+    <div>{{ username | raw }}</div>
+{#    Vire complètement les balises !#}
+    <div>{{ username | striptags }}</div>
+
+
 {% endblock %}
+
+
+
+
+
+
+
+
 
 
 
