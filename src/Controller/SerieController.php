@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+
+use App\Entity\Serie;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,9 +30,37 @@ final class SerieController extends AbstractController
     }
 
     #[Route('/create', name: 'create', methods: ['POST', 'GET'])]
-    public function create(): Response
+    public function create(EntityManagerInterface $entityManager): Response
     {
         //TODO renvoyer un formulaire de création de série
+        $serie = new Serie();
+        $serie
+            ->setBackdrop('backdrop.png')
+            ->setDateCreated(new \DateTime())
+            ->setFirstAirDate(new \DateTime('-6 year'))
+            ->setName('Stargate SG1')
+            ->setGenres('SF')
+            ->setLastAirDate(new \DateTime('-3 month'))
+            ->setPopularity(5000)
+            ->setPoster('poster.png')
+            ->setStatus('canceled')
+            ->setTmdbId(12345)
+            ->setVote(8);
+
+        dump($serie);
+
+        $entityManager->persist($serie);
+        $entityManager->flush();
+
+        dump($serie);
+
+        $serie->setName('Code Quantum 2');
+        $entityManager->persist($serie);
+        $entityManager->flush();
+
+        $entityManager->remove($serie);
+        $entityManager->flush();
+
         return $this->render('serie/create.html.twig');
     }
 }
