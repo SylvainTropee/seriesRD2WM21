@@ -29,6 +29,7 @@ a{
 nav ul {
     list-style: none;
     display: flex;
+    padding-left: 0px;
 }
 
 nav li {
