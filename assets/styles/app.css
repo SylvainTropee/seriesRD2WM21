@@ -63,6 +63,28 @@ img{
     padding-left: 5px;
 }
 
+.link-button{
+    border: 2px solid blueviolet;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 30% 5%;
+}
+
+.flex-div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.flex-between{
+    justify-content: space-between;
+}
+
+label{
+    display: block;
+}
+
+
 
 
 
