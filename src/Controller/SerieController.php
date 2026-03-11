@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Serie;
+use App\Repository\SerieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,19 +15,28 @@ use Symfony\Component\Routing\Attribute\Route;
 final class SerieController extends AbstractController
 {
     #[Route('', name: 'list')]
-    public function list(): Response
+    public function list(SerieRepository $serieRepository): Response
     {
-        //TODO renvoyer la liste des séries !
-        return $this->render('serie/list.html.twig');
+
+        $series = $serieRepository->findAll();
+
+        return $this->render('serie/list.html.twig', [
+            'series' => $series
+        ]);
     }
 
     #[Route('/{id}', name: 'show', requirements: ['id' => '\d+'])]
-    public function show(int $id): Response
+    public function show(int $id, SerieRepository $serieRepository): Response
     {
-        dump($id);
+        $serie = $serieRepository->find($id);
 
-        //TODO renvoyer une série !
-        return $this->render('serie/show.html.twig');
+        if (!$serie) {
+            throw $this->createNotFoundException('Ooooops ! Serie not found ');
+        }
+
+        return $this->render('serie/show.html.twig', [
+            'serie' => $serie
+        ]);
     }
 
     #[Route('/create', name: 'create', methods: ['POST', 'GET'])]
