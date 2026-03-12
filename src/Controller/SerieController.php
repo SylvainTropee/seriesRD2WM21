@@ -111,7 +111,7 @@ final class SerieController extends AbstractController
         }
 
         return $this->render('serie/update.html.twig', [
-            'serieForm' => $serieForm
+            'serieForm2' => $serieForm
         ]);
 
     }

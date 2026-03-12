@@ -8,6 +8,7 @@
             <img src="{{ asset('images/posters/series/' ~ serie.poster) }}" alt="{{ serie.name }}">
         </div>
         <div class="serie-details-infos">
+            <a class="link-button" href="{{ path('series_update', {'id': serie.id}) }}">Update</a>
             <h2>{{ serie.name }}</h2>
             <div>User ratings : {{ serie.vote }}</div>
             <div>Categorized in {{ serie.genres }}</div>
