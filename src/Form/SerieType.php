@@ -6,6 +6,7 @@ use App\Entity\Serie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,7 +18,10 @@ class SerieType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Nom :'
+                'label' => 'Nom :',
+                'attr' => [
+                    'class' => 'michel'
+    ]
             ])
             ->add('overview', TextareaType::class)
             ->add('status', ChoiceType::class, [
@@ -43,7 +47,9 @@ class SerieType extends AbstractType
                 'widget' => 'single_text'
             ])
             ->add('lastAirDate', DateType::class)
-            ->add('backdrop')
+            ->add('backdrop', FileType::class, [
+                'mapped' => false
+            ])
             ->add('poster')
             ->add('tmdbId')
         ;
@@ -53,7 +59,8 @@ class SerieType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Serie::class,
-            'required' => false
+            'required' => false,
+//            'csrf_protection' => false
         ]);
     }
 }

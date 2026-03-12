@@ -8,6 +8,7 @@ use App\Form\SerieType;
 use App\Repository\SerieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -70,6 +71,14 @@ final class SerieController extends AbstractController
 
         if ($serieForm->isSubmitted() && $serieForm->isValid()) {
 
+            /**
+             * @var UploadedFile $file
+             */
+            $file = $serieForm->get('backdrop')->getData();
+            $newFileName = $serie->getName() . '-' . uniqid() . '.' . $file->guessExtension();
+            $file->move('images/backdrops', $newFileName);
+            $serie->setBackdrop($newFileName);
+
             //traitement des données
 //            $serie->setDateCreated(new \DateTime());
             $entityManager->persist($serie);
@@ -87,11 +96,12 @@ final class SerieController extends AbstractController
 
     #[Route('/update/{id}', name: 'update', methods: ['POST', 'GET'])]
     public function update(
-        int $id,
-        SerieRepository $serieRepository,
-        Request $request,
+        int                    $id,
+        SerieRepository        $serieRepository,
+        Request                $request,
         EntityManagerInterface $entityManager
-    ){
+    )
+    {
 
         //récupération de la série
         $serie = $serieRepository->find($id);
@@ -100,7 +110,7 @@ final class SerieController extends AbstractController
         //extraction des données de la requête
         $serieForm->handleRequest($request);
         //test soumission et validation
-        if($serieForm->isSubmitted() && $serieForm->isValid()){
+        if ($serieForm->isSubmitted() && $serieForm->isValid()) {
             //enregistrement en bdd
             $entityManager->persist($serie);
             $entityManager->flush();
