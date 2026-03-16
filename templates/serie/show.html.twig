@@ -9,6 +9,8 @@
         </div>
         <div class="serie-details-infos">
             <a class="link-button" href="{{ path('series_update', {'id': serie.id}) }}">Update</a>
+            <a onclick="return confirm('Suppression de {{ serie.name }} ?')" class="link-button"
+               href="{{ path('series_delete', {'id': serie.id}) }}">Delete</a>
             <h2>{{ serie.name }}</h2>
             <div>User ratings : {{ serie.vote }}</div>
             <div>Categorized in {{ serie.genres }}</div>
@@ -24,6 +26,7 @@
                 <img src="{{ asset('images/posters/seasons/' ~ season.poster) }}"
                      alt="{{ serie.name }} | #{{ season.number }}">
                 <div>
+                    <div><a class="link-button" href="{{ path('season_delete', {'id': season.id}) }}">Delete</a></div>
                     <h4>#{{ season.number }}</h4>
                     <div>{{ season.firstAirDate | date ("d/m/Y") }}</div>
                     <div>{{ season.overview | nl2br }}</div>
