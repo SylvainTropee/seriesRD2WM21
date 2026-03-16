@@ -11,6 +11,7 @@
             <a class="link-button" href="{{ path('series_update', {'id': serie.id}) }}">Update</a>
             <a onclick="return confirm('Suppression de {{ serie.name }} ?')" class="link-button"
                href="{{ path('series_delete', {'id': serie.id}) }}">Delete</a>
+            <a class="link-button" href="{{ path('season_add_by_serie', {'id': serie.id}) }}">Add a season</a>
             <h2>{{ serie.name }}</h2>
             <div>User ratings : {{ serie.vote }}</div>
             <div>Categorized in {{ serie.genres }}</div>

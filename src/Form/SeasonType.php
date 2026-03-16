@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Season;
 use App\Entity\Serie;
+use App\Repository\SerieRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,11 +20,15 @@ class SeasonType extends AbstractType
             ->add('overview')
             ->add('poster')
             ->add('tmdbId')
+//            ->add('serie', SerieType::class)
             ->add('serie', EntityType::class, [
                 'class' => Serie::class,
                 'choice_label' => 'name',
-            ])
-        ;
+                'placeholder' => 'Choisir une série',
+                'query_builder' => function (SerieRepository $serieRepository) {
+                    return $serieRepository->createQueryBuilder('s')->addOrderBy('s.name');
+                }
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
