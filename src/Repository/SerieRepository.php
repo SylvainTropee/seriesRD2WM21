@@ -28,10 +28,10 @@ class SerieRepository extends ServiceEntityRepository
 //        $query = $this->getEntityManager()->createQuery($dql);
 
         $qb = $this->createQueryBuilder('s');
-        $qb
-//            ->andWhere('s.vote > 8')
-//            ->andWhere('s.popularity > 1000')
-            ->addOrderBy('s.popularity', 'DESC');
+        $qb->addOrderBy('s.popularity', 'DESC');
+        //jointure + select
+        $qb->leftJoin('s.seasons', 'seasons');
+        $qb->addSelect('seasons');
 
         $query = $qb->getQuery();
         $query->setMaxResults(50);
