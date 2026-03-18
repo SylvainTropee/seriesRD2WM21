@@ -18,7 +18,7 @@
             <div>Status : {{ serie.status }}</div>
             <div>Aired from {{ serie.firstAirDate | date('Y/m/d') }} to {{ serie.lastAirDate | date('Y/m/d') }}</div>
             <div>{{ serie.overview | nl2br }}</div>
-            <div>Likes : {{ serie.nbLike }}
+            <div>Likes : <span id="serie-like">{{ serie.nbLike }}</span>
                 <button class="btn-like" value="1">&#128077;</button>
                 <button value="-1" class="btn-like">&#128078;</button>
             </div>
@@ -52,6 +52,11 @@
                 let data = {like: this.value};
                 fetch('{{ path('api_series_update', {'id' : serie.id }) }}',
                     {method: 'PUT', body: JSON.stringify(data)})
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('serie-like').innerText = data.nbLike
+                        console.log(data)
+                    })
             })
 
         })

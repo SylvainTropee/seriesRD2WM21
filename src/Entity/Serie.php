@@ -75,6 +75,7 @@ class Serie
     private Collection $seasons;
 
     #[ORM\Column]
+    #[Groups('serie-api')]
     private ?int $nbLike = null;
 
     public function __construct()
