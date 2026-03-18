@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Serie;
 use App\Form\SerieType;
 use App\Repository\SerieRepository;
+use App\Utils\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -60,7 +61,11 @@ final class SerieController extends AbstractController
     }
 
     #[Route('/create', name: 'create', methods: ['POST', 'GET'])]
-    public function create(EntityManagerInterface $entityManager, Request $request): Response
+    public function create(
+        EntityManagerInterface $entityManager,
+        Request                $request,
+        FileUploader           $fileUploader
+    ): Response
     {
         $serie = new Serie();
 //        $serie->setName('La série de Michel');
@@ -75,9 +80,12 @@ final class SerieController extends AbstractController
              * @var UploadedFile $file
              */
             $file = $serieForm->get('backdrop')->getData();
-            $newFileName = $serie->getName() . '-' . uniqid() . '.' . $file->guessExtension();
-            $file->move('images/backdrops', $newFileName);
-            $serie->setBackdrop($newFileName);
+            if($file){
+                $serie->setBackdrop(
+                    $fileUploader->upload($file, 'images/backdrops', $serie->getName())
+                );
+            }
+
 
             //traitement des données
 //            $serie->setDateCreated(new \DateTime());
@@ -128,8 +136,8 @@ final class SerieController extends AbstractController
 
     #[Route('/delete/{id}', name: 'delete', requirements: ['id' => '\d+'])]
     public function delete(
-        int $id,
-        SerieRepository $serieRepository,
+        int                    $id,
+        SerieRepository        $serieRepository,
         EntityManagerInterface $entityManager
     ): Response
     {
