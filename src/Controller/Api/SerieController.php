@@ -36,9 +36,9 @@ final class SerieController extends AbstractController
     }
 
     #[Route('/{id}', name: 'update', methods: ['PUT', 'PATCH'])]
-    public function update(int $id): Response
+    public function update(int $id, Request $request): Response
     {
-        //TODO updater une série
+        dd($request->getContent());
     }
 
     #[Route('', name: 'create', methods: ['POST'])]
