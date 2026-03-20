@@ -82,10 +82,9 @@ final class SerieController extends AbstractController
             $file = $serieForm->get('backdrop')->getData();
             if($file){
                 $serie->setBackdrop(
-                    $fileUploader->upload($file, 'images/backdrops', $serie->getName())
+                    $fileUploader->upload($file, 'assets/images/backdrops', $serie->getName())
                 );
             }
-
 
             //traitement des données
 //            $serie->setDateCreated(new \DateTime());
